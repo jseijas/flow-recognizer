@@ -1,11 +1,28 @@
 import FlowRecognizer from './flow-recognizer';
 import request from 'request';
 
+/**
+ * Flow Recognizer for the LUIS.ai NLP platform.
+ */
 class FlowRecognizerLuis extends FlowRecognizer{
+
+  /**
+   * Constructor of the class.
+   * 
+   * @param { Object } settings Settings for the instance.
+   */
   constructor(settings) {
     super(settings);
   }
 
+  /**
+   * Given an utterance and a model, try to recognize the utterance,
+   * returning the error (if exists), the intents and the entities recognized.
+   * 
+   * @param { String } utterance Utterance to be recognized.
+   * @param { String } model Correct model for the recognition.
+   * @param { Function } cb Callback Function.
+   */
   recognizeUterrance(utterance, model, cb) {
     try {
       let uri = model.trim();

@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "apiai": "^4.0.0",
+    "node-wit": "^4.2.0",
     "request": "^2.80.0",
     "uuid": "^3.0.1"
   }

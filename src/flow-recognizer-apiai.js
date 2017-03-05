@@ -2,12 +2,25 @@ import FlowRecognizer from './flow-recognizer';
 import apiai from 'apiai';
 import uuid from 'uuid';
 
+/**
+ * Flow Recognizer for the API.ai NLP platform.
+ */
 class FlowRecognizerApiai extends FlowRecognizer{
+
+  /**
+   * Constructor of the class.
+   * 
+   * @param { Object } settings Settings for the instance.
+   */
   constructor(settings) {
     super(settings);
     this.apps = {};
   }
 
+  /**
+   * Gets an application to connect to API.ai, given the model.
+   * The applications are cached, so an instance per model will exists.
+   */
   getApp(model) {
     if (!this.apps[model]) {
       this.apps[model] = new apiai(model);
@@ -15,6 +28,9 @@ class FlowRecognizerApiai extends FlowRecognizer{
     return this.apps[model];
   }
 
+  /** 
+   * Gets the default entities.
+   */
   getDefaultEntities(result) {
     return [
       {
@@ -31,9 +47,17 @@ class FlowRecognizerApiai extends FlowRecognizer{
         endIndex: -1,
         score: 1
       }
-    ]
+    ];
   }
 
+  /**
+   * Given an utterance and a model, try to recognize the utterance,
+   * returning the error (if exists), the intents and the entities recognized.
+   * 
+   * @param { String } utterance Utterance to be recognized.
+   * @param { String } model Correct model for the recognition.
+   * @param { Function } cb Callback Function.
+   */
   recognizeUtterance(utterance, model, cb) {
     let app = this.getApp(model);
     let request = app.textRequest(utterance, { sessionId: uuid.v1() });

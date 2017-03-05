@@ -1,9 +1,20 @@
+/**
+ * Abstract Class for a Microsoft Bot Framework Intent Recognizer.
+ */
 class FlowRecognizer {
+
+  /**
+   * Constructor of the class.
+   */
   constructor(settings) {
     this.settings = settings || {};
     this.initializeModels();
   }
 
+  /**
+   * Initialize the models by locale. If the model provided is a string,
+   * then will be the default model for any locale.
+   */
   initializeModels() {
     this.models = this.settings.models || {};
     if (typeof this.models === 'string') {
@@ -13,12 +24,24 @@ class FlowRecognizer {
     }
   }
 
+  /**
+   * Log a message.
+   * 
+   * @param { String } level Level of the message.
+   * @param { String } message Content of the message.
+   */
   log(level, message) {
     if (this.settings.logger) {
       this.settings.logger.log(level, message);
     }
   }
 
+  /**
+   * Add a model for a set of locales.
+   * 
+   * @param { String[] } locales Array of locales for the model.
+   * @param { String } key Key of the model.
+   */
   addModel(locales, key) {
     if (typeof locales === 'string') {
       locales = [locales];
@@ -28,6 +51,13 @@ class FlowRecognizer {
     }
   }
 
+  /**
+   * Gets the model given the locale. If the model for this locale does not 
+   * exists, then return the default model.
+   * 
+   * @param { String } locale Locale of the model.
+   * @returns { String } Model for the given locale.
+   */
   getModel(locale) {
     locale = locale || '*';
     let model = this.models[locale];
@@ -37,10 +67,24 @@ class FlowRecognizer {
     return model;
   }
 
+  /**
+   * Given an utterance and a model, try to recognize the utterance,
+   * returning the error (if exists), the intents and the entities recognized.
+   * 
+   * @param { String } utterance Utterance to be recognized.
+   * @param { String } model Correct model for the recognition.
+   * @param { Function } cb Callback Function.
+   */
   recognizeUtterance(utterance, model, cb) {
     return cb();
   }
 
+  /**
+   * Given a context of a message, try to recognize the intents and entities.
+   * 
+   * @param { Object } context Session context of the received message.
+   * @param { Function } cb Callback Function.
+   */
   recognize(context, cb) {
     let result = { score: 0.0, intent: null };
     if (context && context.message && context.message.text) {
