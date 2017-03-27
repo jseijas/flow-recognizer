@@ -22,7 +22,7 @@ import { IntentDialog } from 'botbuilder';
 
 let witRecognizer = new FlowRecognizerWit({ models: 'Your access token'});
 let apiaiRecognizer = new FlowRecognizerApiai({ models: 'Your access token'});
-let luisRecognizer = new FlowRecognizerApiai({ models: 'Your luis url'});
+let luisRecognizer = new FlowRecognizerLuis({ models: 'Your luis url'});
 let intents = new IntentDialog({ recognizers: [witRecognizer, apiaiRecognizer, luisRecognizer ]});
 intents.matches('intent.name', (session, args) => {...});
 
